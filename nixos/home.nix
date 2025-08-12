@@ -33,6 +33,10 @@
     ".config/wofi" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/wofi;
     };
+
+    ".config/ohmyposh" = {
+      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/ohmyposh;
+    };
   };
 
   home.sessionVariables = {
