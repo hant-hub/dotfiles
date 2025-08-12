@@ -9,6 +9,8 @@
   home.packages = with pkgs; [
   	git
     eza
+    fzf
+    oh-my-posh
     zoxide
   ];
 
@@ -24,18 +26,26 @@
 
     ".config/kitty" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/kitty;
+	  recursive = true;
     };
 
     ".config/waybar" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/waybar;
+	  recursive = true;
     };
 
     ".config/wofi" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/wofi;
+	  recursive = true;
     };
 
     ".config/ohmyposh" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/ohmyposh;
+	  recursive = true;
+    };
+
+    ".zshrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/zshrc;
     };
   };
 

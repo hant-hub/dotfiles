@@ -65,13 +65,17 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  programs.neovim = {
+      enable = true;
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+  };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
 	pkgs.vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     pkgs.tree-sitter
-    inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
     pkgs.clang
     pkgs.nodejs
 	pkgs.mesa
@@ -94,6 +98,7 @@
 	pkgs.wofi
   #  wget
   ];
+
 
   fonts.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
