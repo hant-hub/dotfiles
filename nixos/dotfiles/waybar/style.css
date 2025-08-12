@@ -25,7 +25,7 @@
 
 * {
   all: unset;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 900;
   font-family:
     JetBrainsMonoNerdFont,
@@ -70,6 +70,7 @@ window#waybar.empty #window {
 
 #custom-appmenu,
 #quicklinks,
+#battery
 #sound,
 #hardware,
 #clock,
@@ -81,6 +82,7 @@ window#waybar.empty #window {
 
 #sound,
 #hardware,
+#battery
 #clock {
   padding: 0 8px;
 }
@@ -100,7 +102,7 @@ tooltip * {
 #custom-quicklink8,
 #custom-quicklink9,
 #custom-quicklink10 {
-  font-size: 1.0rem;
+  font-size: 0.6rem;
   margin: 0 0.5rem;
 }
 #custom-quicklink1 {
@@ -115,7 +117,7 @@ tooltip * {
 
 #custom-appmenu,
 #custom-notification {
-  font-size: 24px;
+  font-size: 12px;
   min-width: 32px;
   min-height: 32px;
   padding-right: 4px;
