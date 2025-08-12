@@ -96,6 +96,7 @@
 	pkgs.dunst
 
 	pkgs.wofi
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   #  wget
   ];
 

@@ -10,8 +10,12 @@
   	git
     eza
     fzf
+    zathura
     oh-my-posh
     zoxide
+    clang-tools
+    valgrind
+    (texlive.combine{ inherit (texlive) scheme-medium; })
   ];
 
   home.file = {
@@ -60,6 +64,9 @@
 			Name = "Elijah Hantman";
 			Email = "elihantman@gmail.com";
 		};
+        core = {
+            Editor = "nvim";
+        };
 	};
   };
 
