@@ -15,6 +15,7 @@
     zoxide
     clang-tools
     lua-language-server
+    nixd
     valgrind
     (texlive.combine{ inherit (texlive) scheme-medium; })
   ];
