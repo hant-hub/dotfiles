@@ -66,8 +66,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   programs.neovim = {
-      enable = true;
-      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+        enable = true;
+        package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
   };
 
 

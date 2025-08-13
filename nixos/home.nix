@@ -14,6 +14,7 @@
     oh-my-posh
     zoxide
     clang-tools
+    lua-language-server
     valgrind
     (texlive.combine{ inherit (texlive) scheme-medium; })
   ];

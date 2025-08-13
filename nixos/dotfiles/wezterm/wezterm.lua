@@ -11,8 +11,8 @@ config.initial_cols = 120
 config.initial_rows = 28
 
 -- or, changing the font size and color scheme.
-config.font_size = 6
-config.color_scheme = 'AdventureTime'
+config.font_size = 9.5
+config.enable_tab_bar = false
 
 -- Finally, return the configuration to wezterm:
 return config
