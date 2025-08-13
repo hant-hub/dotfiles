@@ -2,7 +2,7 @@
   description = "System Configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     hyprland.url = "github:hyprwm/hyprland?ref=v0.36.0";
 
@@ -31,7 +31,7 @@
 	in
 	{
 		nixosConfigurations = {
-			myNixos = nixpkgs.lib.nixosSystem {
+			elilaptop = nixpkgs.lib.nixosSystem {
 				specialArgs = { inherit inputs system; };
 				modules = [
 					./nixos/configuration.nix

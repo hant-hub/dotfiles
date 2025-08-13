@@ -37,7 +37,6 @@
 
     ".config/waybar" = {
       source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/waybar;
-	  recursive = true;
     };
 
     ".config/wofi" = {

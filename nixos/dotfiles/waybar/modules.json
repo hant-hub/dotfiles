@@ -84,8 +84,8 @@
   "clock": {
     // "timezone": "America/New_York",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "󰥔 {0:%I:%M %p}",
-    "format-alt": "󰥔 {0:%I:%M %p}   {0:%A %e, %B %Y}"
+    "format": " 󰥔 {0:%I:%M %p} ",
+    "format-alt": " 󰥔 {0:%I:%M %p}   {0:%A %e, %B %Y} "
   },
 
   "hyprland/language": {
@@ -115,7 +115,7 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}  {capacity}%",
+    "format": "{icon}{capacity}%",
     "format-charging": "  {capacity}%",
     "format-plugged": "  {capacity}%",
     "format-alt": "{icon}  {time}",
