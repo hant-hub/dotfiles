@@ -18,7 +18,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
 
 	let
 		system = "x86_64-linux";
@@ -32,12 +32,21 @@
 	{
 		nixosConfigurations = {
 			elilaptop = nixpkgs.lib.nixosSystem {
-				specialArgs = { inherit inputs system; };
+				inherit system;
 				modules = [
 					./nixos/configuration.nix
 				];
 			};
 		};
+
+        homeConfigurations = {
+			elijahh = home-manager.lib.homeManagerConfiguration {
+                inherit pkgs;
+				modules = [
+					./nixos/home.nix
+				];
+			};
+        };
 	};
 
 }

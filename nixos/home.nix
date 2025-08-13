@@ -21,36 +21,36 @@
 
   home.file = {
   	".config/hypr" = {
-	  source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/hypr;
+	  source = ./dotfiles/hypr;
 	  recursive = true;
 	};
 
   	".config/nvim" = {
-	  source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/nvim;
+	  source = ./dotfiles/nvim;
 	  recursive = true;
 	};
 
     ".config/wezterm" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/wezterm;
+      source = ./dotfiles/wezterm;
 	  recursive = true;
     };
 
     ".config/waybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/waybar;
+      source = ./dotfiles/waybar;
     };
 
     ".config/wofi" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/wofi;
+      source = ./dotfiles/wofi;
 	  recursive = true;
     };
 
     ".config/ohmyposh" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/ohmyposh;
+      source = ./dotfiles/ohmyposh;
 	  recursive = true;
     };
 
     ".zshrc" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/zshrc;
+      source = ./dotfiles/zshrc;
     };
   };
 
