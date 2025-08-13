@@ -1,5 +1,5 @@
 {
-  "pipewire": {
+  "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-bluetooth": "{volume}% {icon} ",
     "format-bluetooth-muted": "  {icon} ",
@@ -20,6 +20,6 @@
 
   "group/sound": {
     "orientation": "horizontal",
-    "modules": ["pipewire"]
+    "modules": ["pulseaudio"]
   }
 }
