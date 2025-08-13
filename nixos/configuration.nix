@@ -83,7 +83,7 @@
 	pkgs.git
 	pkgs.pciutils
 	pkgs.zsh
-	pkgs.kitty
+	pkgs.wezterm
 	pkgs.firefox
 	pkgs.home-manager
 
@@ -98,6 +98,7 @@
 	pkgs.wofi
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   #  wget
+ # M
   ];
 
 

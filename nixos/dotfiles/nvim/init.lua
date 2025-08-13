@@ -77,7 +77,11 @@ require('oil').setup {
 }
 
 require("blink.cmp").setup {
-    keymap = { preset = 'default' },
+    keymap = { 
+        preset = 'default',
+        ['<Tab>'] = {},
+        ['<S-Tab>'] = {}
+    },
     appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned

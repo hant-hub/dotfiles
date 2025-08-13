@@ -23,13 +23,14 @@
 	  source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/hypr;
 	  recursive = true;
 	};
+
   	".config/nvim" = {
 	  source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/nvim;
 	  recursive = true;
 	};
 
-    ".config/kitty" = {
-      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/kitty;
+    ".config/wezterm" = {
+      source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/wezterm;
 	  recursive = true;
     };
 
