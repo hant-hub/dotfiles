@@ -1,7 +1,7 @@
 {
   description = "System Configuration";
 
-  inputs = {
+  inputs =  {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     hyprland.url = "github:hyprwm/hyprland?ref=v0.36.0";
@@ -13,12 +13,12 @@
     };
 
     home-manager = {
-    	url = "github:nix-community/home-manager";
+    	url = "github:nix-community/home-manager/release-25.05";
 	    inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { nixpkgs, home-manager, ... }:
 
 	let
 		system = "x86_64-linux";

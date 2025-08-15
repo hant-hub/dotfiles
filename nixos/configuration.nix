@@ -84,7 +84,6 @@
 	pkgs.zsh
 	pkgs.wezterm
 	pkgs.firefox
-	pkgs.home-manager
 
 	pkgs.waybar
 
@@ -129,14 +128,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
-  home-manager = {
-  	extraSpecialArgs = { inherit inputs; };
-	users = {
-	  elijahh = import ./home.nix;
-	};
-  };
-
 
   system.stateVersion = "25.05"; # Did you read the comment?
 
