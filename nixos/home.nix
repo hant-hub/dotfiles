@@ -15,9 +15,12 @@
     oh-my-posh
     zoxide
     clang-tools
+    python3
     lua-language-server
     nixd
     valgrind
+    gdb
+    steam-run
     texlive.combined.scheme-full
   ];
 
@@ -69,10 +72,6 @@
   };
 
 
-  programs.oh-my-posh = {
-        enable = true;
-  };
-
   programs.zoxide = {
         enable = true;
         enableZshIntegration = true;
@@ -101,6 +100,7 @@
             zstyle ':completion:*' list-colors '${"\${(s.:.)LS_COLORS}"}'
             zstyle ':completion:*' menu no
 
+            eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/velvet.json)"
             zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
             zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
         '';

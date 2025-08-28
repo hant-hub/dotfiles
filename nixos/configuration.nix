@@ -15,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_15;
 
   networking.hostName = "elilaptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -62,6 +62,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  services.power-profiles-daemon.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   programs.neovim = {
@@ -95,10 +96,36 @@
 
 	pkgs.wofi
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+
+    pkgs.man-db
+    pkgs.man-pages
+    pkgs.man-pages-posix
+    pkgs.glibcInfo
+    pkgs.clang-manpages
+
+    pkgs.power-profiles-daemon
+
+    pkgs.zip
+    pkgs.unzip
+    pkgs.brightnessctl
   #  wget
  # M
   ];
 
+    programs.nix-ld.enable = true;
+
+    programs.nix-ld.libraries = with pkgs; [
+        sdl2-compat
+        (python311.withPackages (ps: [ ps.pygame ]))
+        python312Packages.pygame-sdl2
+
+    ];
+
+  documentation = {
+        dev.enable = true;
+        man.generateCaches = true;
+        nixos.includeAllModules = true;                                         
+  };
 
   fonts.packages = with pkgs; [
         nerd-fonts.jetbrains-mono
