@@ -41,6 +41,8 @@ vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
 vim.keymap.set("n", "<C-l>", "<C-w>l")
 
+vim.keymap.set('t', "<Esc>", "<C-\\><C-n>")
+
 vim.g.maplocalleader = ","
 
 vim.pack.add({
@@ -136,6 +138,9 @@ vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'signcolumn', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'tabline', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'statusline', { bg = 'none' })
 
 vim.api.nvim_set_hl(0, "@comment.TODO", { fg = "#ff0000", bold = true })
 

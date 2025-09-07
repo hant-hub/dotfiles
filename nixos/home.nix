@@ -21,6 +21,11 @@
     valgrind
     gdb
     steam-run
+    neofetch
+    xorg.libX11.dev
+    xorg.libX11
+    xorg.libXft
+    xorg.libXinerama
     texlive.combined.scheme-full
   ];
 

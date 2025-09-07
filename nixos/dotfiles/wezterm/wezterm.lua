@@ -15,7 +15,7 @@ config.font_size = 9.5
 config.enable_tab_bar = false
 
 config.default_cursor_style = 'SteadyBar'
-config.window_background_opacity = 0.80
+config.window_background_opacity = 0.20
 
 -- Finally, return the configuration to wezterm:
 return config
