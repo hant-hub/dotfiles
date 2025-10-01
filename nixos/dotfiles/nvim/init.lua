@@ -54,6 +54,7 @@ vim.pack.add({
     { src = "https://github.com/lervag/vimtex" },
     { src = "https://github.com/saghen/blink.cmp" },
     { src = "https://github.com/L3MON4D3/LuaSnip" },
+    { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim.git" },
 })
 
 require("mini.icons").setup()

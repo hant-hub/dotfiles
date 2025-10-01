@@ -107,6 +107,11 @@
     pkgs.zip
     pkgs.unzip
     pkgs.brightnessctl
+
+    pkgs.xorg.libX11
+
+    pkgs.openssl
+    pkgs.ocamlPackages.ca-certs-nss
   #  wget
  # M
   ];
@@ -154,6 +159,17 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+    security.duosec = {
+        pam.enable = true;
+        ssh.enable = true;
+        autopush = true;
+    };
+
+    
+
+
+
 
   system.stateVersion = "25.05"; # Did you read the comment?
 

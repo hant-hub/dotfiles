@@ -20,14 +20,16 @@
     nixd
     valgrind
     gdb
+    hyprlock
     steam-run
     neofetch
-    xorg.libX11.dev
     xorg.libX11
-    xorg.libXft
-    xorg.libXinerama
     texlive.combined.scheme-full
+
+    openconnect
   ];
+
+
 
   home.file = {
   	".config/hypr" = {
