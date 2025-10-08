@@ -158,6 +158,7 @@ local servers = {
         },
     },
     ["clangd"] = {},
+    ["pyright"] = {},
     ["nixd"] = {},
 }
 

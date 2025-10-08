@@ -18,6 +18,7 @@
     python3
     lua-language-server
     nixd
+    pyright
     valgrind
     gdb
     hyprlock
@@ -25,8 +26,7 @@
     neofetch
     xorg.libX11
     texlive.combined.scheme-full
-
-    openconnect
+    traceroute
   ];
 
 
@@ -64,6 +64,7 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
 
   programs.git = {
   	enable = true;
