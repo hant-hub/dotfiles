@@ -14,6 +14,11 @@ config.initial_rows = 28
 config.font_size = 10.5
 config.enable_tab_bar = false
 
+--config.adjust_window_size_when_changing_font_size = false
+--config.dpi = 384.0
+
+--config.enable_wayland = false
+
 config.default_cursor_style = 'SteadyBar'
 config.window_background_opacity = 0.20
 

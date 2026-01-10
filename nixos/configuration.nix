@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./pkgs/sddm.nix
     ];
 
   # Bootloader.
@@ -60,7 +61,7 @@
   users.users.elijahh = {
     isNormalUser = true;
     description = "Elijah Hantman";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "wireshark" ];
     packages = with pkgs; [];
     shell = pkgs.zsh;
   };
@@ -127,11 +128,19 @@
     pkgs.openconnect
 
     pkgs.cacert
+    pkgs.wireshark
+
+    pkgs.steam
+    pkgs.ripgrep
+    pkgs.docker
+
+    pkgs.sddm-astronaut
   #  wget
  # M
   ];
 
     programs.nix-ld.enable = true;
+    virtualisation.docker.enable = true;
 
     programs.nix-ld.libraries = with pkgs; [
         sdl2-compat
@@ -157,6 +166,21 @@
   programs.wireshark = {
     enable = true;
     dumpcap.enable = true;
+    package = pkgs.wireshark;
+  };
+
+  services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+      package = pkgs.kdePackages.sddm;
+       extraPackages = with pkgs; [
+         kdePackages.qt5compat
+         kdePackages.qtmultimedia
+         kdePackages.qtsvg
+         kdePackages.qtvirtualkeyboard
+       ];
+
+      theme = "sddm-astronaut-theme";
   };
 
   programs.hyprland = {
@@ -167,6 +191,8 @@
   hardware = {
   	graphics.enable = true;
   };
+
+  programs.steam.enable = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
@@ -179,6 +205,8 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  services.illum.enable = true; 
 
   security.pki = {
      certificates = [ ''

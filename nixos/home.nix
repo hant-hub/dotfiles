@@ -19,6 +19,7 @@
     lua-language-server
     nixd
     pyright
+    haskell-language-server
     valgrind
     gdb
     hyprlock
@@ -27,8 +28,18 @@
     xorg.libX11
     texlive.combined.scheme-full
     traceroute
+    hyprshot
+    haskellPackages.stack
+    haskellPackages.ghc
+
+    kdePackages.qtdeclarative
   ];
 
+  home.activation = {
+      nvim_link = ''
+      cp ~/system/nixos/dotfiles/nvim ~/.config -r
+      '';
+  };
 
 
   home.file = {
@@ -36,25 +47,25 @@
 	  source = ./dotfiles/hypr;
 	};
 
-  	".config/nvim" = {
-	  source = ./dotfiles/nvim;
+	#".config/nvim" = {
+	#	source = ./dotfiles/nvim;
+	#};
+
+	".config/wezterm" = {
+		source = ./dotfiles/wezterm;
 	};
 
-    ".config/wezterm" = {
-      source = ./dotfiles/wezterm;
-    };
+	".config/waybar" = {
+		source = ./dotfiles/waybar;
+	};
 
-    ".config/waybar" = {
-      source = ./dotfiles/waybar;
-    };
+	".config/wofi" = {
+		source = ./dotfiles/wofi;
+	};
 
-    ".config/wofi" = {
-      source = ./dotfiles/wofi;
-    };
-
-    ".config/ohmyposh" = {
-      source = ./dotfiles/ohmyposh;
-    };
+	".config/ohmyposh" = {
+		source = ./dotfiles/ohmyposh;
+	};
 
         #".zshrc" = {
         #  source = ./dotfiles/zshrc;
@@ -68,7 +79,7 @@
 
   programs.git = {
   	enable = true;
-  	extraConfig = {
+  	settings = {
 		user = {
 			Name = "Elijah Hantman";
 			Email = "elihantman@gmail.com";
@@ -87,6 +98,7 @@
             "--cmd cd"
         ];
   };
+
 
   programs.fzf = {
         enable = true;

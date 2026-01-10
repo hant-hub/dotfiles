@@ -1,6 +1,11 @@
 vim.g.mapleader = ' '
 
 vim.g.c_syntax_for_h = true
+
+--vim.g.terminal_emulator='zsh'
+vim.opt.shell = 'zsh'
+--vim.env.shell = 'zsh'
+
 vim.opt.nu = true
 
 vim.opt.tabstop = 4
@@ -50,26 +55,30 @@ vim.pack.add({
     { src = 'https://github.com/echasnovski/mini.icons' },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = 'https://github.com/dasupradyumna/midnight.nvim' },
-    { src = 'https://github.com/neovim/nvim-lspconfig' },
     { src = "https://github.com/lervag/vimtex" },
+    { src = "https://github.com/neovim/nvim-lspconfig.git"},
     { src = "https://github.com/saghen/blink.cmp" },
     { src = "https://github.com/L3MON4D3/LuaSnip" },
     { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim.git" },
 })
 
 require("mini.icons").setup()
-require('nvim-treesitter.configs').setup {
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "latex", "comment", "elixir", "heex", "javascript", "html" },
-    ignore_install = {''},
-    modules = {},
-    sync_install = false,
-    auto_install = true,
-    highlight = {
-        enable = true,
-        disable = {'latex'}
-    },
-    indent = { enable = true },
-}
+require('nvim-treesitter').setup { }
+
+require('nvim-treesitter').install {
+    "c", "lua", "vim",
+    "vimdoc", "latex", "comment",
+    "elixir", "heex", "javascript",
+    "html", "python" }
+
+vim.api.nvim_create_autocmd('FileType',{
+    pattern = '*',
+    callback = function()
+        pcall(function() vim.treesitter.start() end)
+    end
+
+})
+
 
 vim.g.vimtex_view_method = "zathura"
 
@@ -80,7 +89,7 @@ require('oil').setup {
 }
 
 require("blink.cmp").setup {
-    keymap = { 
+    keymap = {
         preset = 'default',
         ['<Tab>'] = {},
         ['<S-Tab>'] = {}
@@ -128,6 +137,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if client:supports_method('textDocument/completion') then
             vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
         end
+
         --local opts = { noremap = true, silent = true }
     end,
 })
@@ -151,20 +161,26 @@ local servers = {
             Lua = {
                 workspace = {
                     -- Make the server aware of Neovim runtime files and plugins
-                    library = vim.api.nvim_list_runtime_paths(),
+                    library = { vim.env.VIMRUNTIME },
                     checkThirdParty = false,
                 },
             }
-        },
+        }
     },
     ["clangd"] = {},
+    ["hls"] = {},
     ["pyright"] = {},
     ["nixd"] = {},
+    ["qmlls"] = {
+        root_markers = { ".", ".git", ".qmlls.ini" },
+        filetypes = { 'qml' },
+    },
 }
 
 for server_name, config in pairs(servers) do
     local capabilities = require('blink.cmp').get_lsp_capabilities(config)
-    require('lspconfig')[server_name].setup(capabilities)
+    config.capabilities = capabilities
+    vim.lsp.config(server_name, config)
     vim.lsp.enable(server_name)
 end
 
@@ -181,13 +197,17 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d<CR>')
 vim.keymap.set("n", "]d", function()
     vim.diagnostic.jump {
         count = 1,
-        float = true,
+        on_jump = function()
+            vim.diagnostic.open_float({})
+        end
     }
 end)
 vim.keymap.set("n", "[d", function()
     vim.diagnostic.jump {
         count = -1,
-        float = true,
+        on_jump = function()
+            vim.diagnostic.open_float({})
+        end
     }
 end)
 
