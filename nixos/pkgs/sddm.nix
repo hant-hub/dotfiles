@@ -1,8 +1,8 @@
 { stdenv, fetchFromGitHub }:
 {
-  sddm-themes.sddm-rocket = stdenv.mkDerivation rec {
-    pname = "sddm-sugar-dark";
-    version = "v1.2";
+  sddm-rocket = stdenv.mkDerivation rec {
+    pname = "sddm-rocket";
+    version = "v1.0";
     dontBuild = true;
     installPhase = ''
       mkdir -p $out/share/sddm/themes
@@ -12,7 +12,7 @@
       owner = "hant-hub";
       repo = "BasicRocketTheme";
       rev = "${version}";
-      sha256 = "7f576196a00159581e8641e263105661fec739fb";
+      sha256 = "HJAeOuIQK9jo2ti/JWsaMyE+qLWq1RRHXiP+cmnMLZE=";
     };
   };
 }

@@ -20,6 +20,7 @@
     nixd
     pyright
     haskell-language-server
+    typescript-language-server
     valgrind
     gdb
     hyprlock
@@ -31,6 +32,8 @@
     hyprshot
     haskellPackages.stack
     haskellPackages.ghc
+    libgcc
+    google-chrome
 
     kdePackages.qtdeclarative
   ];

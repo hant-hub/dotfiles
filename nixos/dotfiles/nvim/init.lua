@@ -167,10 +167,16 @@ local servers = {
             }
         }
     },
-    ["clangd"] = {},
+    ["clangd"] = {
+        cmd = {
+            "clangd",
+            "--header-insertion=never",
+        }
+    },
     ["hls"] = {},
     ["pyright"] = {},
     ["nixd"] = {},
+    ["ts_ls"] = {},
     ["qmlls"] = {
         root_markers = { ".", ".git", ".qmlls.ini" },
         filetypes = { 'qml' },
@@ -194,24 +200,42 @@ vim.keymap.set("n", "<leader>h", ":Pick help<CR>")
 vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y<CR>')
 vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d<CR>')
 
+local prev_buf = false
+local function on_jump(diagnostic,bufnr)
+            if not diagnostic then return end
+            if prev_buf then
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    local config = vim.api.nvim_win_get_config(win)
+                    if config.relative ~= "" then
+                        vim.api.nvim_win_close(win, false)
+                    end
+                end
+                prev_buf = false
+            end
+            local _, result = vim.diagnostic.open_float{
+                bufnr = bufnr,
+                pos = diagnostic.lnum,
+            }
+
+            if result then
+                prev_buf = true
+            end
+end
+
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump {
+    vim.diagnostic.jump{
         count = 1,
-        on_jump = function()
-            vim.diagnostic.open_float({})
-        end
+        on_jump = on_jump
     }
 end)
+
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump {
+    vim.diagnostic.jump{
         count = -1,
-        on_jump = function()
-            vim.diagnostic.open_float({})
-        end
+        on_jump = on_jump
     }
 end)
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-
 

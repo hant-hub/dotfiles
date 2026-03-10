@@ -34,9 +34,17 @@
 			elilaptop = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs; };
 				modules = [
+                    ./systems/laptop.nix
 					./nixos/configuration.nix
 				];
 			};
+            elidesktop = nixpkgs.lib.nixosSystem {
+                specialArgs = { inherit inputs; };
+                modules = [
+                    ./systems/desktop.nix
+                    ./nixos/configuration.nix
+                ];
+            };
 		};
 
         homeConfigurations = {

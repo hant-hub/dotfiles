@@ -4,11 +4,12 @@
 
 { inputs, config, pkgs, ... }:
 
-{
+let 
+    custom = pkgs.callPackage ./pkgs/sddm.nix {};
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./pkgs/sddm.nix
     ];
 
   # Bootloader.
@@ -135,6 +136,8 @@
     pkgs.docker
 
     pkgs.sddm-astronaut
+
+    custom.sddm-rocket
   #  wget
  # M
   ];
@@ -173,15 +176,17 @@
       enable = true;
       wayland.enable = true;
       package = pkgs.kdePackages.sddm;
-       extraPackages = with pkgs; [
-         kdePackages.qt5compat
-         kdePackages.qtmultimedia
-         kdePackages.qtsvg
-         kdePackages.qtvirtualkeyboard
-       ];
+      extraPackages = with pkgs; [
+          kdePackages.qt5compat
+              kdePackages.qtmultimedia
+              kdePackages.qtsvg
+              kdePackages.qtvirtualkeyboard
+      ];
 
-      theme = "sddm-astronaut-theme";
+      theme = "sddm-rocket";
   };
+    
+
 
   programs.hyprland = {
 	enable = true;
