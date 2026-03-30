@@ -56,14 +56,20 @@ vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = 'https://github.com/dasupradyumna/midnight.nvim' },
     { src = "https://github.com/lervag/vimtex" },
-    { src = "https://github.com/neovim/nvim-lspconfig.git"},
+    { src = "https://github.com/neovim/nvim-lspconfig.git" },
     { src = "https://github.com/saghen/blink.cmp" },
     { src = "https://github.com/L3MON4D3/LuaSnip" },
     { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim.git" },
+    { src = "https://github.com/tpope/vim-fugitive" },
+    { src = "https://github.com/nvim-lua/plenary.nvim.git" },
+    { src = "https://github.com/ej-shafran/compile-mode.nvim.git" },
+    { src = "https://github.com/m00qek/baleia.nvim.git" },
 })
 
+vim.g.baleia = require("baleia").setup {}
+
 require("mini.icons").setup()
-require('nvim-treesitter').setup { }
+require('nvim-treesitter').setup {}
 
 require('nvim-treesitter').install {
     "c", "lua", "vim",
@@ -71,7 +77,7 @@ require('nvim-treesitter').install {
     "elixir", "heex", "javascript",
     "html", "python" }
 
-vim.api.nvim_create_autocmd('FileType',{
+vim.api.nvim_create_autocmd('FileType', {
     pattern = '*',
     callback = function()
         pcall(function() vim.treesitter.start() end)
@@ -118,13 +124,20 @@ require("blink.cmp").setup {
     snippets = { preset = 'luasnip' },
 }
 
-require("luasnip").setup{
+require("luasnip").setup {
     history = true,
     delete_check_events = "TextChanged",
     region_check_events = "CursorMoved",
 }
 require("luasnip.loaders.from_snipmate").lazy_load()
 
+vim.g.compile_mode = {
+    focus_compilation_buffer = true,
+    baleia_setup = true,
+}
+
+vim.keymap.set("n", "<leader>c", ':below Compile ')
+vim.keymap.set("n", "<leader>cc", ':below Recompile<CR>')
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -173,6 +186,7 @@ local servers = {
             "--header-insertion=never",
         }
     },
+    ["glslls"] = {},
     ["hls"] = {},
     ["pyright"] = {},
     ["nixd"] = {},
@@ -201,36 +215,36 @@ vim.keymap.set({ "n", "v", "x" }, "<leader>y", '"+y<CR>')
 vim.keymap.set({ "n", "v", "x" }, "<leader>d", '"+d<CR>')
 
 local prev_buf = false
-local function on_jump(diagnostic,bufnr)
-            if not diagnostic then return end
-            if prev_buf then
-                for _, win in ipairs(vim.api.nvim_list_wins()) do
-                    local config = vim.api.nvim_win_get_config(win)
-                    if config.relative ~= "" then
-                        vim.api.nvim_win_close(win, false)
-                    end
-                end
-                prev_buf = false
+local function on_jump(diagnostic, bufnr)
+    if not diagnostic then return end
+    if prev_buf then
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+            local config = vim.api.nvim_win_get_config(win)
+            if config.relative ~= "" then
+                vim.api.nvim_win_close(win, false)
             end
-            local _, result = vim.diagnostic.open_float{
-                bufnr = bufnr,
-                pos = diagnostic.lnum,
-            }
+        end
+        prev_buf = false
+    end
+    local _, result = vim.diagnostic.open_float {
+        bufnr = bufnr,
+        pos = diagnostic.lnum,
+    }
 
-            if result then
-                prev_buf = true
-            end
+    if result then
+        prev_buf = true
+    end
 end
 
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump{
+    vim.diagnostic.jump {
         count = 1,
         on_jump = on_jump
     }
 end)
 
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump{
+    vim.diagnostic.jump {
         count = -1,
         on_jump = on_jump
     }
@@ -238,4 +252,3 @@ end)
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
-

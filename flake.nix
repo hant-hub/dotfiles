@@ -21,9 +21,9 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
 
 	let
-		system = "x86_64-linux";
+        system = "x86_64-linux";
 		pkgs = import nixpkgs {
-			inherit system;
+            inherit system;
 			config = {
 				allowUnfree = true;
 			};
@@ -34,14 +34,14 @@
 			elilaptop = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs; };
 				modules = [
-                    ./systems/laptop.nix
+                    #./systems/laptop.nix
 					./nixos/configuration.nix
 				];
 			};
             elidesktop = nixpkgs.lib.nixosSystem {
                 specialArgs = { inherit inputs; };
                 modules = [
-                    ./systems/desktop.nix
+                    #./systems/desktop.nix
                     ./nixos/configuration.nix
                 ];
             };

@@ -21,12 +21,13 @@
     pyright
     haskell-language-server
     typescript-language-server
+    glslls
     valgrind
     gdb
     hyprlock
     steam-run
-    neofetch
-    xorg.libX11
+    fastfetch
+    libX11
     texlive.combined.scheme-full
     traceroute
     hyprshot
@@ -34,6 +35,10 @@
     haskellPackages.ghc
     libgcc
     google-chrome
+
+    pqiv
+
+    rgp
 
     kdePackages.qtdeclarative
   ];

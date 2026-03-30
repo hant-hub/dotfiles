@@ -74,7 +74,7 @@ in {
 
   programs.neovim = {
         enable = true;
-        package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+        package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
 
 
@@ -92,6 +92,7 @@ in {
 	pkgs.zsh
 	pkgs.wezterm
 	pkgs.firefox
+    pkgs.perf
 
 	pkgs.waybar
 
@@ -102,7 +103,7 @@ in {
 	pkgs.dunst
 
 	pkgs.wofi
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     pkgs.man-db
     pkgs.man-pages
@@ -116,7 +117,7 @@ in {
     pkgs.unzip
     pkgs.brightnessctl
 
-    pkgs.xorg.libX11
+    pkgs.libX11
 
     pkgs.duo-unix
 
@@ -136,6 +137,7 @@ in {
     pkgs.docker
 
     pkgs.sddm-astronaut
+    pkgs.rgp
 
     custom.sddm-rocket
   #  wget
@@ -154,7 +156,7 @@ in {
 
   documentation = {
         dev.enable = true;
-        man.generateCaches = true;
+        man.cache.enable = true;
         nixos.includeAllModules = true;                                         
   };
 
