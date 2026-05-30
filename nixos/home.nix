@@ -21,7 +21,11 @@
     pyright
     haskell-language-server
     typescript-language-server
-    glslls
+    ffmpeg
+
+    glsl_analyzer
+
+    superhtml
     valgrind
     gdb
     hyprlock
@@ -37,8 +41,10 @@
     google-chrome
 
     pqiv
+    blender
 
     rgp
+    cmake
 
     kdePackages.qtdeclarative
   ];
