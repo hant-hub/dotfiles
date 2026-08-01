@@ -132,13 +132,13 @@ in {
 	pkgs.waybar
 
 	pkgs.hyprpaper
+	pkgs.hyprlauncher
 
     pkgs.libX11
 
 	pkgs.libnotify
 	pkgs.dunst
 
-	pkgs.wofi
     inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     pkgs.man-db

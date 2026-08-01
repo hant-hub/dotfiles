@@ -71,10 +71,6 @@
 		source = ./dotfiles/waybar;
 	};
 
-	".config/wofi" = {
-		source = ./dotfiles/wofi;
-	};
-
 	".config/ohmyposh" = {
 		source = ./dotfiles/ohmyposh;
 	};
