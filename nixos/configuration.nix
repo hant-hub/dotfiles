@@ -19,7 +19,13 @@ in {
   # Use latest kernel.
 
   networking.hostName = "elilaptop"; # Define your hostname.
+  networking.dhcpcd.enable = true;
+  networking.dhcpcd.extraConfig = ''
+    elilaptop
+  '';
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -72,6 +78,35 @@ in {
   services.power-profiles-daemon.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  services.nginx = {
+      enable = true;
+      virtualHosts."ehantman.freemyip.com" = {
+          listen = [
+            { addr = "0.0.0.0"; port = 8000; ssl = true; } # disable ssl for testing
+            { addr = "[::]"; port = 8000; ssl = true; }
+            { addr = "0.0.0.0"; port = 80; ssl = false; }
+          ];
+
+          sslCertificate = "/var/lib/acme/ehantman.freemyip.com/fullchain.pem";
+          sslCertificateKey = "/var/lib/acme/ehantman.freemyip.com/key.pem";
+
+          forceSSL = true;
+          useACMEHost = "ehantman.freemyip.com";
+          locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
+          locations."/".proxyPass = "http://localhost:4000";
+      };
+  };
+
+  security.acme = {
+      acceptTerms = true;
+      #defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+      defaults.email = "elihantman@gmail.com";
+      defaults.webroot = "/var/lib/acme/acme-challenge/";
+      certs."ehantman.freemyip.com".group = config.services.nginx.group;
+  };
+  networking.firewall.allowedTCPPorts = [ 80 8000 ];
+
+
   programs.neovim = {
         enable = true;
         package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -98,6 +133,7 @@ in {
 
 	pkgs.hyprpaper
 
+    pkgs.libX11
 
 	pkgs.libnotify
 	pkgs.dunst
@@ -135,11 +171,18 @@ in {
     pkgs.steam
     pkgs.ripgrep
     pkgs.docker
+    pkgs.rpi-imager
 
     pkgs.sddm-astronaut
     pkgs.rgp
 
+    pkgs.dhcpcd
+    pkgs.rustc
+    pkgs.cargo
+
     custom.sddm-rocket
+
+    pkgs.kdePackages.qtdeclarative
   #  wget
  # M
   ];
@@ -212,51 +255,6 @@ in {
     pulse.enable = true;
     jack.enable = true;
   };
-
-  services.illum.enable = true; 
-
-  security.pki = {
-     certificates = [ ''
-            -----BEGIN CERTIFICATE-----
-MIIEoTCCA4mgAwIBAgIJAOSNPtSPcGOVMA0GCSqGSIb3DQEBCwUAMIGRMQswCQYD
-VQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTETMBEGA1UEBxMKU2FudGEgQ3J1
-ejERMA8GA1UEChMIVUNTQy1OT0MxHDAaBgkqhkiG9w0BCQEWDW5vcHNAdWNzYy5l
-ZHUxJzAlBgNVBAMTHlVDU0MtTk9DIENlcnRpZmljYXRlIEF1dGhvcml0eTAeFw0x
-NjA5MjEyMTQ0NDlaFw0zNjA5MTYyMTQ0NDlaMIGRMQswCQYDVQQGEwJVUzETMBEG
-A1UECBMKQ2FsaWZvcm5pYTETMBEGA1UEBxMKU2FudGEgQ3J1ejERMA8GA1UEChMI
-VUNTQy1OT0MxHDAaBgkqhkiG9w0BCQEWDW5vcHNAdWNzYy5lZHUxJzAlBgNVBAMT
-HlVDU0MtTk9DIENlcnRpZmljYXRlIEF1dGhvcml0eTCCASIwDQYJKoZIhvcNAQEB
-BQADggEPADCCAQoCggEBAK4TFSlLcPsuBHt7NyEk2iqHYBUKLe090NC+O/5s1hLS
-aEMWljZMTp1A5dM7Bvw9swx3ZEIupKfY/AObGcgYCSPSFfkeg3qnbSojRl5JCg2i
-uZJxHZ7kwCGkF8DFjmsAmszVRuJmRfyUML1fYDBR+xjqnBbeDaPCSEpLC3e+mzy4
-EWYHmi/CEDOu9uD28ROFfJxdOg+MuabQzHXMO4IBD/CVgJEpxXiKz/C32A5yPALT
-Z7rfVyIFPPezGwkmcwCqFQH88ALYkrfe6sJ8BEtmc8zDgji/2T5dIubycvCaPKHp
-xqanlkUb6Dy1Q1sHM6Z1Oq+wT2oA+NQX3JIW5VzdJL0CAwEAAaOB+TCB9jAdBgNV
-HQ4EFgQUCJ3qctdMoYobhLfks1jzhQ0D7d4wgcYGA1UdIwSBvjCBu4AUCJ3qctdM
-oYobhLfks1jzhQ0D7d6hgZekgZQwgZExCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpD
-YWxpZm9ybmlhMRMwEQYDVQQHEwpTYW50YSBDcnV6MREwDwYDVQQKEwhVQ1NDLU5P
-QzEcMBoGCSqGSIb3DQEJARYNbm9wc0B1Y3NjLmVkdTEnMCUGA1UEAxMeVUNTQy1O
-T0MgQ2VydGlmaWNhdGUgQXV0aG9yaXR5ggkA5I0+1I9wY5UwDAYDVR0TBAUwAwEB
-/zANBgkqhkiG9w0BAQsFAAOCAQEAXKsm8hgrP60onNajQp964bMclF4tDhhmpKko
-eWCn8D2j5/SN9w9bMLBX5GA9BLFpw/zreP42IkkpByvxafTtK0zn4lx6Otu0Yfxx
-RgNUumrQDTKf8JBqLfWS0FOwt582hhEgZtZ8Yk8pyZuqHAqruzLTfhgyCW7bqka+
-9jpJdrZDXG5+vpDRkpmZv0O22IV6YsERtaqrFzcc6tDS4m1JoC5idpniwcPxYDFX
-ZsrLBqW8FO4Pq/OMNxQ/Vtai/n0+vJmtaeGYpqL5Lw3xAP9lLl4B9QWx/APTNsvZ
-nEHvzeSc0WOxossRSbvDBlXehoCF+YtncnkkfjhDF9XcUo6RZw==
------END CERTIFICATE-----
-       ''
-     ]
-     ;
-  };
- 
-    security.duosec = {
-        pam.enable = true;
-        autopush = true;
-    };
-
-    
-
-
 
 
   system.stateVersion = "25.05"; # Did you read the comment?

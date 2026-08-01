@@ -50,6 +50,7 @@ vim.keymap.set('t', "<Esc>", "<C-\\><C-n>")
 
 vim.g.maplocalleader = ","
 
+
 vim.pack.add({
     { src = 'https://github.com/stevearc/oil.nvim', },
     { src = 'https://github.com/echasnovski/mini.icons' },
@@ -57,6 +58,7 @@ vim.pack.add({
     { src = 'https://github.com/dasupradyumna/midnight.nvim' },
     { src = "https://github.com/lervag/vimtex" },
     { src = "https://github.com/neovim/nvim-lspconfig.git" },
+    { src = 'https://github.com/saghen/blink.lib' },
     { src = "https://github.com/saghen/blink.cmp" },
     { src = "https://github.com/L3MON4D3/LuaSnip" },
     { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim.git" },
@@ -72,7 +74,7 @@ require("mini.icons").setup()
 require('nvim-treesitter').setup {}
 
 require('nvim-treesitter').install {
-    "c", "lua", "vim",
+    "c", "lua", "vim", "nix",
     "vimdoc", "latex", "comment",
     "elixir", "heex", "javascript",
     "html", "python" }
@@ -87,6 +89,15 @@ vim.api.nvim_create_autocmd('FileType', {
 
 
 vim.g.vimtex_view_method = "zathura"
+vim.g.vimtex_compiler_latexmk = {
+         ['executable'] = 'latexmk',
+         ['options'] = {
+           '-xelatex',
+           '-file-line-error',
+           '-synctex=1',
+           '-interaction=nonstopmode',
+         },
+        }
 
 require('oil').setup {
     view_options = {
@@ -94,20 +105,20 @@ require('oil').setup {
     },
 }
 
-require("blink.cmp").setup {
+
+local cmp = require("blink.cmp")
+cmp.build():pwait()
+cmp.setup {
     keymap = {
         preset = 'default',
         ['<Tab>'] = {},
         ['<S-Tab>'] = {}
     },
-    appearance = {
-        -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-        -- Adjusts spacing to ensure icons are aligned
-        nerd_font_variant = 'mono'
-    },
+
+    enabled = true,
 
     -- (Default) Only show the documentation popup when manually triggered
-    completion = { documentation = { auto_show = false } },
+    completion = { },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
@@ -115,12 +126,6 @@ require("blink.cmp").setup {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
 
-    -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-    -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-    -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-    --
-    -- See the fuzzy documentation for more information
-    fuzzy = { implementation = "lua" },
     snippets = { preset = 'luasnip' },
 }
 
@@ -148,9 +153,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end
 
         if client:supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+            --vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
         end
-
         --local opts = { noremap = true, silent = true }
     end,
 })
@@ -189,7 +193,11 @@ local servers = {
     ["glslls"] = {},
     ["hls"] = {},
     ["pyright"] = {},
-    ["nixd"] = {},
+    ["nixd"] = {
+        nixpkgs = {
+            expr = "import <nixpkgs> {}",
+        },
+    },
     ["ts_ls"] = {},
     ["qmlls"] = {
         root_markers = { ".", ".git", ".qmlls.ini" },

@@ -31,7 +31,6 @@
     hyprlock
     steam-run
     fastfetch
-    libX11
     texlive.combined.scheme-full
     traceroute
     hyprshot
@@ -46,7 +45,6 @@
     rgp
     cmake
 
-    kdePackages.qtdeclarative
   ];
 
   home.activation = {
