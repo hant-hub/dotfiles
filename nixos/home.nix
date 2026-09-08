@@ -22,6 +22,9 @@
     haskell-language-server
     typescript-language-server
     ffmpeg
+    typescript
+
+    yazi
 
     glsl_analyzer
 
@@ -31,7 +34,7 @@
     hyprlock
     steam-run
     fastfetch
-    texlive.combined.scheme-full
+    texliveFull
     traceroute
     hyprshot
     haskellPackages.stack
@@ -45,6 +48,7 @@
     rgp
     cmake
 
+    siege
   ];
 
   home.activation = {
@@ -135,7 +139,7 @@
     shellAliases = {
         "ls" = "eza -A --icons -s=name --group-directories-first -1";
         "vim" = "nvim";
-        "dup" = "hyprctl dispatch exec -- wezterm start --cwd $PWD";
+        "dup" = "wezterm start --cwd $PWD 2> /dev/null";
     };
   };
 

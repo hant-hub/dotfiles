@@ -17,7 +17,7 @@ config.enable_tab_bar = false
 --config.adjust_window_size_when_changing_font_size = false
 --config.dpi = 384.0
 
---config.enable_wayland = false
+config.enable_wayland = true
 
 config.default_cursor_style = 'SteadyBar'
 config.window_background_opacity = 0.20

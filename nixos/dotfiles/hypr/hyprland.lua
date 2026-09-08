@@ -260,6 +260,15 @@ local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("hyprlock"))
+
+hl.bind(mainMod .. " + F",
+    hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.window.fullscreen_state({internal = 1, client = 1, action = \"toggle\"})'")
+)
+
+hl.bind(mainMod .. " + SHIFT + F",
+    hl.dsp.exec_cmd("hyprctl dispatch 'hl.dsp.window.fullscreen_state({internal = 2, client = 2, action = \"toggle\"})'")
+)
+
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
 --local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
