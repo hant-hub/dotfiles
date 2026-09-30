@@ -66,6 +66,10 @@
 	#".config/nvim" = {
 	#	source = ./dotfiles/nvim;
 	#};
+    
+    ".tmux.conf" = {
+        source = ./dotfiles/.tmux.conf;
+    };
 
     ".config/vis" = {
         source = ./dotfiles/vis;

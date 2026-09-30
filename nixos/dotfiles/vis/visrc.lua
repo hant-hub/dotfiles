@@ -17,9 +17,9 @@ vis.events.subscribe(vis.events.WIN_OPEN, function(win)
 end)
 
 
-local lsp = require('plugins/vis-lspcs')
+local lsp = require('plugins/vis-lspc')
 
-lsp.ls.map.lua = {
+lsp.ls_map.lua = {
     name = 'lua-language-server',
     cmd = 'lua-language-server',
     settings = {
