@@ -67,6 +67,10 @@
 	#	source = ./dotfiles/nvim;
 	#};
 
+    ".config/vis" = {
+        source = ./dotfiles/vis;
+    };
+
 	".config/wezterm" = {
 		source = ./dotfiles/wezterm;
 	};
