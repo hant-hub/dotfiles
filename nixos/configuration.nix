@@ -78,35 +78,6 @@ in {
   services.power-profiles-daemon.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  services.nginx = {
-      enable = true;
-      virtualHosts."ehantman.freemyip.com" = {
-          listen = [
-            { addr = "0.0.0.0"; port = 8000; ssl = true; } # disable ssl for testing
-            { addr = "[::]"; port = 8000; ssl = true; }
-            { addr = "0.0.0.0"; port = 80; ssl = false; }
-          ];
-
-          sslCertificate = "/var/lib/acme/ehantman.freemyip.com/fullchain.pem";
-          sslCertificateKey = "/var/lib/acme/ehantman.freemyip.com/key.pem";
-
-          forceSSL = true;
-          useACMEHost = "ehantman.freemyip.com";
-          locations."/.well-known/".root = "/var/lib/acme/acme-challenge/";
-          locations."/".proxyPass = "http://localhost:4000";
-      };
-  };
-
-  security.acme = {
-      acceptTerms = true;
-      #defaults.server = "https://acme-staging-v02.api.letsencrypt.org/directory";
-      defaults.email = "elihantman@gmail.com";
-      defaults.webroot = "/var/lib/acme/acme-challenge/";
-      certs."ehantman.freemyip.com".group = config.services.nginx.group;
-  };
-  networking.firewall.allowedTCPPorts = [ 80 8000 ];
-
-
   programs.neovim = {
         enable = true;
         package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -124,12 +95,18 @@ in {
 	pkgs.mesa-demos
 	pkgs.git
 	pkgs.pciutils
+
 	pkgs.zsh
 	pkgs.wezterm
+
+    pkgs.alacritty
+    pkgs.tmux
+
 	pkgs.firefox
     pkgs.perf
 
 	pkgs.waybar
+    pkgs.vis
 
 	pkgs.hyprpaper
 	pkgs.hyprlauncher
@@ -141,6 +118,7 @@ in {
 
     inputs.rose-pine-hyprcursor.packages.${pkgs.stdenv.hostPlatform.system}.default
 
+    pkgs.tealdeer
     pkgs.man-db
     pkgs.man-pages
     pkgs.man-pages-posix

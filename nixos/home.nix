@@ -71,6 +71,10 @@
 		source = ./dotfiles/wezterm;
 	};
 
+	".config/alacritty" = {
+		source = ./dotfiles/alacritty;
+	};
+
 	".config/waybar" = {
 		source = ./dotfiles/waybar;
 	};
