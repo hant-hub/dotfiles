@@ -20,4 +20,4 @@ bindkey '^[w' kill-region
 
 alias ls='eza -A --icons -s=name --group-directories-first -1'
 alias vim='nvim'
-alias dup='hyprctl dispatch exec -- wezterm start --cwd $PWD'
+alias dup='hyprctl dispatch exec -- '

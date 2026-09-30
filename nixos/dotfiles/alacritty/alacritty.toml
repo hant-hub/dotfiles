@@ -1,3 +1,43 @@
+[window]
+    dimensions = { columns = 120, lines = 28 }
+    opacity = 0.2
+    padding = { x = 5, y = 5 }
+    dynamic_padding = true
+    decorations = "None"
 
-opacity = 0.2
+[font]
+    size = 10.5
+    normal = { family = "JetBrains Mono", style = "Regular" }
 
+# Colors (Dracula)
+
+# Default colors
+[colors.primary]
+background = '#000000'
+foreground = '#cccccc'
+
+[colors.cursor]
+text = '#F81CE5'
+cursor = '#ffffff'
+
+# Normal colors
+[colors.normal]
+black   = '#000000'
+red     = '#fc0000'
+green   = '#31ff00'
+yellow  = '#fcfd00'
+blue    = '#0064fd'
+magenta = '#cc00fd'
+cyan    = '#00fdfd'
+white   = '#cecece'
+
+# Bright colors
+[colors.bright]
+black   = '#808080'
+red     = '#fe0100'
+green   = '#33ff00'
+yellow  = '#feff00'
+blue    = '#0066ff'
+magenta = '#cc00ff'
+cyan    = '#00ffff'
+white   = '#FFFFFF'
