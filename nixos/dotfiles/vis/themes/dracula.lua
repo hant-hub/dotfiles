@@ -3,6 +3,7 @@ require('vis')
 local lexers = vis.lexers
 
 local colors = {
+	['empty']  = '#000000',
 	['base00'] = '#282936',
 	['base01'] = '#3a3c4e',
 	['base02'] = '#4d4f68',
@@ -26,8 +27,8 @@ lexers.colors = colors
 local fg = ',fore:'..colors.base05..','
 local bg = ',back:'..colors.base00..','
 
-lexers.STYLE_DEFAULT = bg..fg
-lexers.STYLE_NOTHING = bg
+lexers.STYLE_DEFAULT = ''
+lexers.STYLE_NOTHING = ''
 lexers.STYLE_CLASS = 'fore:'..colors.base0A
 lexers.STYLE_COMMENT = 'fore:'..colors.base03..',italics'
 lexers.STYLE_CONSTANT = 'fore:'..colors.base09
@@ -44,11 +45,11 @@ lexers.STYLE_PREPROCESSOR = 'fore:'..colors.base0A
 lexers.STYLE_TAG = 'fore:'..colors.base0A
 lexers.STYLE_TYPE = 'fore:'..colors.base0A
 lexers.STYLE_VARIABLE = 'fore:'..colors.base0D
-lexers.STYLE_WHITESPACE = 'fore:'..colors.base02
+lexers.STYLE_WHITESPACE = ''
 lexers.STYLE_EMBEDDED = 'fore:'..colors.base0F
 lexers.STYLE_IDENTIFIER = 'fore:'..colors.base08
 
-lexers.STYLE_LINENUMBER = 'fore:'..colors.base02..',back:'..colors.base00
+lexers.STYLE_LINENUMBER = ''
 lexers.STYLE_CURSOR = 'fore:'..colors.base00..',back:'..colors.base05
 lexers.STYLE_CURSOR_PRIMARY = 'fore:'..colors.base00..',back:'..colors.base05
 lexers.STYLE_CURSOR_LINE = 'back:'..colors.base01
