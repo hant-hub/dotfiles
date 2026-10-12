@@ -33,3 +33,5 @@ lsp.ls_map.lua = {
         insertSpaces = false,
     },
 }
+
+local tree = require('plugins/vis-treesitter')

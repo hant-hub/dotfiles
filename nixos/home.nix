@@ -151,7 +151,7 @@
     shellAliases = {
         "ls" = "eza -A --icons -s=name --group-directories-first -1";
         "vim" = "nvim";
-        "dup" = "alacritty --working-directory . & disown";
+        "dup" = "wezterm start --cwd $PWD 2> /dev/null";
     };
   };
 

@@ -28,7 +28,7 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "alacritty"
+local terminal    = "wezterm"
 local fileManager = "dolphin"
 local menu        = "hyprlauncher"
 
