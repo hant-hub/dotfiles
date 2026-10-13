@@ -19,8 +19,6 @@
     lua-language-server
     nixd
     pyright
-    haskell-language-server
-    typescript-language-server
     ffmpeg
     typescript
 
@@ -72,6 +70,7 @@
     };
 
     ".config/vis" = {
+        recursive = true;
         source = ./dotfiles/vis;
     };
 
