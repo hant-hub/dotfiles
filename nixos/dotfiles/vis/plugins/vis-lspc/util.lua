@@ -412,11 +412,13 @@ end
 --- Wrapper to define a style in vis.
 -- @param id The style id
 -- @param style The style description
-function util.style_define(id, style)
-  if vis.API and vis.API > 3215 then
+-- @param win The optional window object for older vis versions
+function util.style_define(id, style, win)
+  if (vis.API and vis.API > 3215) or (vis.ui and vis.ui.style_define) then
     return vis.ui:style_define(id, style)
   else
-    return vis.win:style_define(id, style)
+    local w = win or vis.win
+    return w and w:style_define(id, style)
   end
 end
 

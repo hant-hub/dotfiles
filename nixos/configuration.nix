@@ -5,7 +5,7 @@
 { inputs, config, pkgs, ... }:
 
 let 
-    custom = pkgs.callPackage ./pkgs/sddm.nix {};
+    sddm = pkgs.callPackage ./pkgs/sddm.nix {};
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -158,7 +158,7 @@ in {
     pkgs.rustc
     pkgs.cargo
 
-    custom.sddm-rocket
+    sddm.sddm-rocket
 
     pkgs.kdePackages.qtdeclarative
   #  wget

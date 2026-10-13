@@ -594,7 +594,7 @@ end
 local function lspc_highlight_server_diagnostics(win, server_diagnostics, style)
   if not style then
     if not lspc.diagnostic_style_id then
-      if vis.API and vis.API > 3215 then
+      if (vis.API and vis.API > 3215) or (vis.ui and vis.ui.style_push) then
         lspc.diagnostic_style_id = vis.ui:style_push()
       else
         lspc.diagnostic_style_id = win.STYLE_LEXER_MAX
@@ -612,7 +612,7 @@ local function lspc_highlight_server_diagnostics(win, server_diagnostics, style)
 
   for _, diagnostic in ipairs(server_diagnostics) do
     local diagnostic_style = level_mapping[diagnostic.severity] or level_mapping[1]
-    assert(util.style_define(style, diagnostic_style))
+    assert(util.style_define(style, diagnostic_style, win))
 
     if lspc.highlight_diagnostics == 'range' then
       local range = diagnostic.vis_range
@@ -668,8 +668,15 @@ function LanguageServer:rpc(req)
   local msg = header_part .. '\r\n\r\n' .. content_part
   lspc:log('LSPC Sending -> ' .. self.name .. ': ' .. msg)
 
-  self.fd:write(msg)
-  self.fd:flush()
+  local ok, err = pcall(function()
+    self.fd:write(msg)
+    self.fd:flush()
+  end)
+  if not ok then
+    lspc:warn('Could not send message to ' .. self.name .. ': ' .. tostring(err))
+    return false
+  end
+  return true
 end
 
 --- Send a RPC notification to the language server
@@ -1081,7 +1088,7 @@ local function lspc_handle_workspace_configuration_call(ls, params, response)
     if next(effective_settings) then
       table.insert(results, effective_settings)
     else
-      table.insert(results, nil)
+      table.insert(results, lspc.json.null)
     end
   end
   response.result = results
@@ -2065,6 +2072,10 @@ vis.events.subscribe(vis.events.FILE_SAVE_POST, function(file, path)
     if ls.capabilities.textDocumentSync and type(ls.capabilities.textDocumentSync) == 'table' and
         ls.capabilities.textDocumentSync.save then
       local did_save_params = {textDocument = {uri = path_to_uri(file.path)}}
+      if type(ls.capabilities.textDocumentSync.save) == 'table' and
+          ls.capabilities.textDocumentSync.save.includeText then
+        did_save_params.text = file:content(0, file.size)
+      end
       ls:send_notification('textDocument/didSave', did_save_params)
     end
     ls:request_diagnostics(vis.win)

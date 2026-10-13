@@ -1,52 +1,55 @@
 { config, pkgs, ... }:
 
-{
+let 
+    vis-treesitter = pkgs.callPackage ./pkgs/vis-treesitter.nix {};
+in {
   home.username = "elijahh";
   home.homeDirectory = "/home/elijahh";
 
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
-  home.packages = with pkgs; [
-  	git
-    eza
-    fzf
-    zsh-fzf-tab
-    zathura
-    oh-my-posh
-    zoxide
-    clang-tools
-    python3
-    lua-language-server
-    nixd
-    pyright
-    ffmpeg
-    typescript
+  home.packages = [
+  	pkgs.git
+    pkgs.eza
+    pkgs.fzf
+    pkgs.zsh-fzf-tab
+    pkgs.zathura
+    pkgs.oh-my-posh
+    pkgs.zoxide
+    pkgs.clang-tools
+    pkgs.python3
+    pkgs.lua-language-server
+    pkgs.nixd
+    pkgs.pyright
+    pkgs.ffmpeg
+    pkgs.typescript
+    pkgs.lua55Packages.luacheck
 
-    yazi
+    pkgs.yazi
 
-    glsl_analyzer
+    pkgs.glsl_analyzer
 
-    superhtml
-    valgrind
-    gdb
-    hyprlock
-    steam-run
-    fastfetch
-    texliveFull
-    traceroute
-    hyprshot
-    haskellPackages.stack
-    haskellPackages.ghc
-    libgcc
-    google-chrome
+    pkgs.superhtml
+    pkgs.valgrind
+    pkgs.gdb
+    pkgs.hyprlock
+    pkgs.steam-run
+    pkgs.fastfetch
+    pkgs.texliveFull
+    pkgs.traceroute
+    pkgs.hyprshot
+    pkgs.haskellPackages.stack
+    pkgs.haskellPackages.ghc
+    pkgs.libgcc
+    pkgs.google-chrome
 
-    pqiv
-    blender
+    pkgs.pqiv
+    pkgs.blender
 
-    rgp
-    cmake
+    pkgs.rgp
+    pkgs.cmake
 
-    siege
+    pkgs.siege
   ];
 
   home.activation = {
@@ -54,6 +57,7 @@
       cp ~/system/nixos/dotfiles/nvim ~/.config -r
       '';
   };
+
 
 
   home.file = {
@@ -69,10 +73,25 @@
         source = ./dotfiles/.tmux.conf;
     };
 
-    ".config/vis" = {
-        recursive = true;
-        source = ./dotfiles/vis;
+    ".config/vis/visrc.lua" = {
+        source = ./dotfiles/vis/visrc.lua;
     };
+
+    ".config/vis/utils.lua" = {
+        source = ./dotfiles/vis/utils.lua;
+    };
+
+    ".config/vis/themes" = {
+        source = ./dotfiles/vis/themes;
+    };
+
+    ".config/vis/plugins/vis-lspc" = {
+        source = ./dotfiles/vis/plugins/vis-lspc;
+    };
+
+    #".config/vis/plugins/vis-treesitter" = {
+    #    source = vis-treesitter.vis-treesitter;
+    #};
 
 	".config/wezterm" = {
 		source = ./dotfiles/wezterm;
@@ -93,6 +112,10 @@
         #".zshrc" = {
         #  source = ./dotfiles/zshrc;
         #};
+  };
+
+  xdg.configFile."vis/plugins/vis-treesitter" = {
+    source = vis-treesitter.vis-treesitter;
   };
 
   home.sessionVariables = {
