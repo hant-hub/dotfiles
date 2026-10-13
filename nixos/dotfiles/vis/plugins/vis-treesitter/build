@@ -1,0 +1,64 @@
+#!/usr/bin/env sh
+
+CC=${CC:-cc}
+
+if [ -z "$LUA_VERSION" ]; then
+    echo "Set LUA_VERSION to the Lua version vis is linked against."
+    echo "  export LUA_VERSION=5.3"
+    echo "  ./build"
+    exit 1
+fi
+
+LUA_CFLAGS=$(pkg-config --cflags "lua${LUA_VERSION}" 2>/dev/null \
+          || pkg-config --cflags "lua-${LUA_VERSION}" 2>/dev/null \
+          || pkg-config --cflags "lua$(echo "$LUA_VERSION" | tr -d '.')" 2>/dev/null)
+
+if [ -z "$LUA_CFLAGS" ]; then
+    echo "Could not find pkg-config for Lua ${LUA_VERSION}."
+    echo "Tried: lua${LUA_VERSION}, lua-${LUA_VERSION}, lua$(echo "$LUA_VERSION" | tr -d '.')"
+    echo "Install the Lua ${LUA_VERSION} development package for your system."
+    exit 1
+fi
+
+TS_CFLAGS=$(pkg-config --cflags tree-sitter 2>/dev/null || true)
+BASE_CFLAGS="-fPIC -Wall -O2 ${LUA_CFLAGS} ${TS_CFLAGS} ${CFLAGS}"
+BASE_LDFLAGS="-shared ${LDFLAGS}"
+
+TS_LIBS=$(pkg-config --libs tree-sitter)
+DYNAMIC_LIBS="${TS_LIBS}"
+STATIC_LIBS="-Wl,-Bstatic ${TS_LIBS} -Wl,-Bdynamic"
+
+clean() {
+    rm -f ts.so
+}
+
+build_static() {
+    echo "* trying to staticly build..."
+    # shellcheck disable=SC2086
+    $CC $BASE_CFLAGS -o ts.so ts.c $BASE_LDFLAGS $STATIC_LIBS
+}
+
+build_dynamic() {
+    echo "* trying dynamicly build..."
+    # shellcheck disable=SC2086
+    $CC $BASE_CFLAGS -o ts.so ts.c $BASE_LDFLAGS $DYNAMIC_LIBS
+}
+
+case "$1" in
+    clean)
+        clean ;;
+    static)
+        clean; build_static ;;
+    dynamic)
+        clean; build_dynamic ;;
+    *)
+        clean
+        # lets try static first; if it fails, clean up and fallback to dynamic
+        if ! build_static 2>/dev/null; then
+            echo "static build failed!!! Falling back to dynamic build..."
+            clean
+            build_dynamic
+        fi
+        ;;
+esac
+
