@@ -35,3 +35,5 @@ lsp.ls_map.lua = {
 }
 
 local tree = require('plugins/vis-treesitter')
+
+print(vis:info(_VERSION))
