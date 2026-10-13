@@ -69,6 +69,10 @@ in {
 	#	source = ./dotfiles/nvim;
 	#};
     
+    ".config/helix" = {
+        source = ./dotfiles/helix;
+    };
+    
     ".tmux.conf" = {
         source = ./dotfiles/.tmux.conf;
     };

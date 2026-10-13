@@ -107,6 +107,8 @@ in {
 
 	pkgs.waybar
     pkgs.vis
+    pkgs.kakoune
+    pkgs.helix
 
 	pkgs.hyprpaper
 	pkgs.hyprlauncher
